@@ -2,7 +2,7 @@ const options = ['rock', 'paper', 'scissors']
 
 function computerPlay() {
     // Get a random integer between 0 and 3 to use when selecting an option from the list
-    randomIndex = Math.floor(Math.random() * 3); 
+    let randomIndex = Math.floor(Math.random() * 3); 
 
     // Return the option at that random index in the list
     return options[randomIndex];
@@ -30,7 +30,7 @@ function playRound(playerSelection, computerSelection) {
     console.log(`Computer entered: ${computerSelection}`);
 
     // Initialize winner and results variables
-    let isWinner;
+    let winner;
 
     // Create error message in case something goes wrong
     let error_message = 'Something went wrong. Please try again.';
@@ -44,10 +44,10 @@ function playRound(playerSelection, computerSelection) {
             case 'rock':
                 switch(computerSelection) {
                     case 'scissors':
-                        isWinner = true;
+                        winner = true;
                         break;
                     case 'paper':
-                        isWinner = false;
+                        winner = false;
                         break;
                     default:
                         return error_message;
@@ -56,10 +56,10 @@ function playRound(playerSelection, computerSelection) {
             case 'paper':
                 switch(computerSelection) {
                     case 'rock':
-                        isWinner = true;
+                        winner = true;
                         break;
                     case 'scissors':
-                        isWinner = false;
+                        winner = false;
                         break;
                     default:
                         return error_message;
@@ -68,17 +68,17 @@ function playRound(playerSelection, computerSelection) {
             case 'scissors':
                 switch(computerSelection) {
                     case 'paper':
-                        isWinner = true;
+                        winner = true;
                         break;
                     case 'rock':
-                        isWinner = false;
+                        winner = false;
                         break;
                     default:
                         return error_message;
                 }
         }
 
-        if (isWinner) {
+        if (winner) {
             return 'win';
         } else {
             return 'lose';
