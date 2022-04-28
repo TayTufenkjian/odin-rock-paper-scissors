@@ -10,6 +10,20 @@ function computerPlay() {
 }
 
 
+function playerPlay() {
+    // List the possible options
+    options = ['rock', 'paper', 'scissors']
+
+    // Prompt the player until they enter a valid selection
+    do {
+        playerSelection = prompt('Enter rock, paper, or scissors:');
+    } while (!playerSelection || !options.includes(playerSelection.toLowerCase()))
+
+    // Return the selection
+    return playerSelection;
+}
+
+
 function playRound(playerSelection, computerSelection) {
 
     // Convert player selection to all lowercase letters for the purposes of comparison
@@ -86,7 +100,7 @@ function game() {
     for (i = 0; i < 5; i++) {
 
         // Get the player selection
-        let playerSelection = prompt(`Round ${i + 1} - enter rock, paper, or scissors:`);
+        let playerSelection = playerPlay();
 
         // Get the computer selection
         let computerSelection = computerPlay();
