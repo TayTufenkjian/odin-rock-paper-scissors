@@ -68,10 +68,46 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-let playerSelection ="Paper";
-let computerSelection = computerPlay();
+function game() {
+    // Initialize variables to keep score
+    let playerScore = 0;
+    let computerScore = 0;
 
-console.log(playerSelection);
-console.log(computerSelection);
+    // Play 5 rounds of the game  
+    for (i = 0; i < 5; i++) {
 
-console.log(playRound(playerSelection, computerSelection));
+        // Get the player selection
+        let playerSelection = prompt(`Round ${i + 1} - enter rock, paper, or scissors:`);
+
+        // Get the computer selection
+        let computerSelection = computerPlay();
+
+        // Play a round
+        let result = playRound(playerSelection, computerSelection);
+
+        // Log the result of the round
+        console.log(`Round ${i + 1}: ${result}`);
+
+        // Keep score
+        if (result.includes('win')) {
+            playerScore += 1;
+        } 
+        if (result.includes('lose')) {
+            computerScore += 1;
+        }
+
+        // Log the updated score
+        console.log(`The score is now: \n Player: ${playerScore} \n Computer: ${computerScore}`);
+    }
+
+    // Log the winner at the end of all 5 rounds
+    if (playerScore > computerScore) {
+        console.log('You won the game!');
+    } else if (playerScore < computerScore) {
+        console.log('You lost the game!');
+    } else {
+        console.log('You tied, after all 5 rounds!');
+    }
+}
+
+game();
