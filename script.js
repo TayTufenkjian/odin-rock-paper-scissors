@@ -17,56 +17,72 @@ function playRound(playerSelection, computerSelection) {
 
     // Initialize winner and results variables
     let isWinner;
-    let result;
 
     // Create error message in case something goes wrong
-    let game_error = 'Something went wrong. Please try again.';
+    let error_message = 'Something went wrong. Please try again.';
 
     // Check for a tie
     if (playerSelection === computerSelection) {
-        return 'You tied! Play again.';
+        return 'tie';
     } else { 
         // If there's no tie, compare player and computer selections 
-        if (playerSelection === 'rock') {
-            if (computerSelection === 'scissors') {
-                isWinner = true;
-            } else if (computerSelection === 'paper') {
-                isWinner = false;
-            } else {
-                return game_error;
-            }
-        } else if (playerSelection === 'scissors') {
-            if (computerSelection === 'paper') {
-                isWinner = true;
-            } else if (computerSelection === 'rock') {
-                isWinner = false;
-            } else {
-                return game_error;
-            }
-        } else if (playerSelection === 'paper') {
-            if (computerSelection === 'rock') {
-                isWinner = true;
-            } else if (computerSelection === 'scissors') {
-                isWinner = false;
-            } else {
-                return game_error;
-            }
-        } else {
-            return game_error;
+        switch (playerSelection) {
+            case 'rock':
+                switch(computerSelection) {
+                    case 'scissors':
+                        isWinner = true;
+                        break;
+                    case 'paper':
+                        isWinner = false;
+                        break;
+                    default:
+                        return error_message;
+                }
+                break;
+            case 'paper':
+                switch(computerSelection) {
+                    case 'rock':
+                        isWinner = true;
+                        break;
+                    case 'scissors':
+                        isWinner = false;
+                        break;
+                    default:
+                        return error_message;
+                }
+                break;
+            case 'scissors':
+                switch(computerSelection) {
+                    case 'paper':
+                        isWinner = true;
+                        break;
+                    case 'rock':
+                        isWinner = false;
+                        break;
+                    default:
+                        return error_message;
+                }
         }
-
-        // Return the winner/loser result
-        playerSelectionFormatted = playerSelection.replace(playerSelection[0], playerSelection[0].toUpperCase());
-        computerSelectionFormatted = computerSelection.replace(computerSelection[0], computerSelection[0].toUpperCase());
 
         if (isWinner) {
-            result = `You win! ${playerSelectionFormatted} beats ${computerSelectionFormatted}.`;
+            return 'win';
         } else {
-            result = `You lose! ${computerSelectionFormatted} beats ${playerSelectionFormatted}.`;
+            return 'lose';
         }
-        return result;
     }
 }
+
+// function message(playerSelection, computerSelection) {
+//     let playerSelectionFormatted = playerSelection.replace(playerSelection[0], playerSelection[0].toUpperCase());
+//     let computerSelectionFormatted = computerSelection.replace(computerSelection[0], computerSelection[0].toUpperCase());
+
+//     if (isWinner) {
+//         result = `You win! ${playerSelectionFormatted} beats ${computerSelectionFormatted}.`;
+//     } else {
+//         result = `You lose! ${computerSelectionFormatted} beats ${playerSelectionFormatted}.`;
+//     }
+//     return result;
+// }
 
 function game() {
     // Initialize variables to keep score
@@ -89,11 +105,20 @@ function game() {
         console.log(`Round ${i + 1}: ${result}`);
 
         // Keep score
-        if (result.includes('win')) {
-            playerScore += 1;
-        } 
-        if (result.includes('lose')) {
-            computerScore += 1;
+        switch(result) {
+            case 'win':
+                playerScore += 1;
+                console.log('You win this round!');
+                break;
+            case 'lose':
+                computerScore += 1;
+                console.log('You lose this round!');
+                break;
+            case 'tie':
+                console.log('This round is a tie!');
+                break;
+            default:
+                console.log('Woops. Something went wrong.');
         }
 
         // Log the updated score
