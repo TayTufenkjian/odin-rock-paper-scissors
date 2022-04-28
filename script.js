@@ -15,6 +15,10 @@ function playRound(playerSelection, computerSelection) {
     // Convert player selection to all lowercase letters for the purposes of comparison
     playerSelection = playerSelection.toLowerCase();
 
+    // For testing
+    console.log(`Player entered: ${playerSelection}`);
+    console.log(`Computer entered: ${computerSelection}`);
+
     // Initialize winner and results variables
     let isWinner;
 
@@ -72,17 +76,6 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// function message(playerSelection, computerSelection) {
-//     let playerSelectionFormatted = playerSelection.replace(playerSelection[0], playerSelection[0].toUpperCase());
-//     let computerSelectionFormatted = computerSelection.replace(computerSelection[0], computerSelection[0].toUpperCase());
-
-//     if (isWinner) {
-//         result = `You win! ${playerSelectionFormatted} beats ${computerSelectionFormatted}.`;
-//     } else {
-//         result = `You lose! ${computerSelectionFormatted} beats ${playerSelectionFormatted}.`;
-//     }
-//     return result;
-// }
 
 function game() {
     // Initialize variables to keep score
@@ -101,25 +94,32 @@ function game() {
         // Play a round
         let result = playRound(playerSelection, computerSelection);
 
-        // Log the result of the round
-        console.log(`Round ${i + 1}: ${result}`);
+        // Format selections to display in message
+        playerSelection = playerSelection.toLowerCase();
+        let playerSelectionFormatted = playerSelection.replace(playerSelection[0], playerSelection[0].toUpperCase());
+        let computerSelectionFormatted = computerSelection.replace(computerSelection[0], computerSelection[0].toUpperCase());
+        let message;
 
         // Keep score
         switch(result) {
             case 'win':
                 playerScore += 1;
-                console.log('You win this round!');
+                message = `You win! ${playerSelectionFormatted} beats ${computerSelectionFormatted}.`;
                 break;
             case 'lose':
                 computerScore += 1;
-                console.log('You lose this round!');
+                message = `You lose! ${computerSelectionFormatted} beats ${playerSelectionFormatted}.`;
                 break;
             case 'tie':
                 console.log('This round is a tie!');
+                message = `Tie! You and the computer both chose ${computerSelectionFormatted}.`
                 break;
             default:
-                console.log('Woops. Something went wrong.');
+                message = 'Woops. Something went wrong.';
         }
+
+        // Log the result of the round
+        console.log(`Round ${i + 1}: ${message}`);
 
         // Log the updated score
         console.log(`The score is now: \n Player: ${playerScore} \n Computer: ${computerScore}`);
