@@ -12,6 +12,9 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
 
+    // Convert player selection to all lowercase letters for the purposes of comparison
+    playerSelection = playerSelection.toLowerCase();
+
     // Initialize winner and results variables
     let isWinner;
     let result;
@@ -65,7 +68,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-let playerSelection ="scissors";
+let playerSelection ="Paper";
 let computerSelection = computerPlay();
 
 console.log(playerSelection);
