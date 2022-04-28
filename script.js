@@ -1,7 +1,6 @@
-function computerPlay() {
-    // List the possible options
-    options = ['rock', 'paper', 'scissors']
+const options = ['rock', 'paper', 'scissors']
 
+function computerPlay() {
     // Get a random integer between 0 and 3 to use when selecting an option from the list
     randomIndex = Math.floor(Math.random() * 3); 
 
@@ -11,13 +10,10 @@ function computerPlay() {
 
 
 function playerPlay() {
-    // List the possible options
-    options = ['rock', 'paper', 'scissors']
-
     // Prompt the player until they enter a valid selection
     do {
         playerSelection = prompt('Enter rock, paper, or scissors:');
-    } while (!playerSelection || !options.includes(playerSelection.toLowerCase()))
+    } while (!options.includes(playerSelection.toLowerCase()))
 
     // Return the selection
     return playerSelection;
