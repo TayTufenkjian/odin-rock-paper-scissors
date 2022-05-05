@@ -1,4 +1,19 @@
+// Initialize global variables
 const options = ['rock', 'paper', 'scissors']
+let playerScore = 0;
+let computerScore = 0;  
+let round = 0;
+
+// Listen for page load
+document.addEventListener('DOMContentLoaded', () => {   
+    // Listen for a click on the buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        // When a button is clicked, play a round
+        button.addEventListener('click', () => playRound(button.id, computerPlay()));
+    })
+});
+
 
 function computerPlay() {
     // Get a random integer between 0 and 3 to use when selecting an option from the list
@@ -9,35 +24,31 @@ function computerPlay() {
 }
 
 
-function playerPlay() {
-    // Prompt the player until they enter a valid selection
-    do {
-        playerSelection = prompt('Enter rock, paper, or scissors:');
-    } while (!options.includes(playerSelection.toLowerCase()))
-
-    // Return the selection
-    return playerSelection;
-}
-
-
 function playRound(playerSelection, computerSelection) {
 
-    // Convert player selection to all lowercase letters for the purposes of comparison
-    playerSelection = playerSelection.toLowerCase();
-
-    // For testing
-    console.log(`Player entered: ${playerSelection}`);
-    console.log(`Computer entered: ${computerSelection}`);
-
-    // Initialize winner and results variables
+    // Initialize winner variable
     let winner;
 
-    // Create error message in case something goes wrong
-    let error_message = 'Something went wrong. Please try again.';
+    // Get divs for showing scores, round result, and game result
+    const divPlayerScore = document.querySelector('#player .score');
+    const divComputerScore = document.querySelector('#computer .score');
+    const roundNumber = document.querySelector('#round');
+    const playerEntered = document.querySelector('#player-entered');
+    const computerEntered = document.querySelector('#computer-entered');
+    const roundResult = document.querySelector('#result');
+    const gameResult = document.querySelector('#game-result');
+
+    // Show the round number
+    round += 1;
+    roundNumber.textContent = `Round: ${round}`;
+
+    // Show the player and computer selections
+    playerEntered.textContent = `Player entered: ${playerSelection}`;
+    computerEntered.textContent = `Computer entered: ${computerSelection}`;
 
     // Check for a tie
     if (playerSelection === computerSelection) {
-        return 'tie';
+        roundResult.textContent = 'Tie!';
     } else { 
         // If there's no tie, compare player and computer selections 
         switch (playerSelection) {
@@ -50,7 +61,7 @@ function playRound(playerSelection, computerSelection) {
                         winner = false;
                         break;
                     default:
-                        return error_message;
+                        break;
                 }
                 break;
             case 'paper':
@@ -62,7 +73,7 @@ function playRound(playerSelection, computerSelection) {
                         winner = false;
                         break;
                     default:
-                        return error_message;
+                        break;
                 }
                 break;
             case 'scissors':
@@ -74,75 +85,32 @@ function playRound(playerSelection, computerSelection) {
                         winner = false;
                         break;
                     default:
-                        return error_message;
+                        break;
                 }
         }
 
-        if (winner) {
-            return 'win';
-        } else {
-            return 'lose';
-        }
-    }
-}
-
-
-function game() {
-    // Initialize variables to keep score
-    let playerScore = 0;
-    let computerScore = 0;
-
-    // Play 5 rounds of the game  
-    for (i = 0; i < 5; i++) {
-
-        // Get the player selection
-        let playerSelection = playerPlay();
-
-        // Get the computer selection
-        let computerSelection = computerPlay();
-
-        // Play a round
-        let result = playRound(playerSelection, computerSelection);
-
-        // Format selections to display in message
-        playerSelection = playerSelection.toLowerCase();
-        let playerSelectionFormatted = playerSelection.replace(playerSelection[0], playerSelection[0].toUpperCase());
-        let computerSelectionFormatted = computerSelection.replace(computerSelection[0], computerSelection[0].toUpperCase());
-        let message;
-
-        // Keep score
-        switch(result) {
-            case 'win':
+        // Keep score and show the result of the round
+        try {
+            if (winner) {
                 playerScore += 1;
-                message = `You win! ${playerSelectionFormatted} beats ${computerSelectionFormatted}.`;
-                break;
-            case 'lose':
+                divPlayerScore.textContent = playerScore;
+                roundResult.textContent = 'You won this round!';
+            } else {
                 computerScore += 1;
-                message = `You lose! ${computerSelectionFormatted} beats ${playerSelectionFormatted}.`;
-                break;
-            case 'tie':
-                console.log('This round is a tie!');
-                message = `Tie! You and the computer both chose ${computerSelectionFormatted}.`
-                break;
-            default:
-                message = 'Woops. Something went wrong.';
+                divComputerScore.textContent = computerScore;
+                roundResult.textContent = 'You lost this round!';
+            }
+        } catch(error) {
+            roundResult.textContent = 'Woops. Something went wrong. Please try again.';
         }
-
-        // Log the result of the round
-        console.log(`Round ${i + 1}: ${message}`);
-
-        // Log the updated score
-        console.log(`The score is now: \n Player: ${playerScore} \n Computer: ${computerScore}`);
     }
 
-    // Log the winner at the end of all 5 rounds
-    if (playerScore > computerScore) {
-        console.log('You won the game!');
-    } else if (playerScore < computerScore) {
-        console.log('You lost the game!');
-    } else {
-        console.log('You tied, after all 5 rounds!');
-    }
+    // Announce winner when either player or computer reaches a score of 5
+    if (playerScore === 5) {
+        gameResult.textContent = 'You won the game!';
+    } 
+    if (computerScore === 5) {
+        gameResult.textContent = 'You lost the game!';
+    } 
 }
-
-game();
+   
